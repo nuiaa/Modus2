@@ -2,13 +2,20 @@
 
 An Android app that combines macro data, options positioning (GEX) and AI-assisted market commentary, available in ten languages.
 
+<p>
+  <a href="https://github.com/nuiaa/Modus2/releases/latest/download/Modus.apk"><img src="https://img.shields.io/badge/Download-Modus.apk-34A853?style=for-the-badge&logo=android&logoColor=white" alt="Download Modus.apk for Android"></a>
+  <a href="https://github.com/nuiaa/Modus2/releases/latest"><img src="https://img.shields.io/github/v/release/nuiaa/Modus2?style=for-the-badge&label=Latest" alt="Latest release"></a>
+</p>
+
+**[⬇ Download Modus.apk](https://github.com/nuiaa/Modus2/releases/latest/download/Modus.apk)** (Android, about 40 MB) · [All releases](https://github.com/nuiaa/Modus2/releases)
+
 > **Not investment advice.** The data and AI output shown by the app are for information and education only and may be wrong, delayed or incomplete. You are responsible for your own trading decisions.
 
 ## Install on your Android phone
 The app is not on Google Play; you install the APK file directly.
 
 1. **Check your phone.** Android 5.0 or newer on a 64-bit or 32-bit ARM processor (almost every phone sold in recent years).
-2. **Download the APK.** On your phone, open the [latest release](https://github.com/nuiaa/Modus2/releases/latest) and tap the file named `borsaradar-…-debug.apk` under **Assets**. You can also build it yourself (see [Android APK](#android-apk) below) and copy it to the phone over USB.
+2. **Download the APK.** On your phone, tap **[Download Modus.apk](https://github.com/nuiaa/Modus2/releases/latest/download/Modus.apk)**; it always points to the newest version. You can also open the [latest release](https://github.com/nuiaa/Modus2/releases/latest) and tap the `.apk` file under **Assets**, or build it yourself (see [Android APK](#android-apk) below) and copy it to the phone over USB.
 3. **Allow the install.** When you open the downloaded file, Android asks for permission to install apps from that source (for example Chrome or Files). Tap **Settings**, turn on **Allow from this source**, then go back.
 4. **Install.** Tap **Install**. If Google Play Protect warns that the app is from an unknown developer, choose **More details → Install anyway**; the APK is signed with a development key, not a Play Store key.
 5. **First launch.** Open **Modus Sync**, allow notifications so price alarms can reach you, and wait a few seconds while market data loads. To use the assistant, enter your own AI provider key (see [AI key](#ai-key)).
