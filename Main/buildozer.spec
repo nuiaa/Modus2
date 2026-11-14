@@ -36,7 +36,7 @@ source.include_exts = py,png,jpg,kv,atlas,json,ttf,txt
 source.exclude_patterns = test_*.py
 
 # (str) Application versioning (method 1)
-version = 0.1
+version = 0.2
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]

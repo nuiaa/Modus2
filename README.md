@@ -9,35 +9,23 @@ An Android app that combines macro data, options positioning (GEX) and AI-assist
 
 **[⬇ Download Modus.apk](https://github.com/nuiaa/Modus2/releases/latest/download/Modus.apk)** (Android, about 40 MB) · [All releases](https://github.com/nuiaa/Modus2/releases)
 
+<p align="center">
+  <a href="design/demo/modus-demo.mp4"><img src="design/demo/modus-demo.gif" width="300" alt="Modus demo: market overview, indicator details, market dynamics, theme and language settings and the AI assistant, in the dark theme"></a>
+  <br><sub>Dark theme tour, recorded on Android. <a href="design/demo/modus-demo.mp4">Watch the MP4</a> for full quality.</sub>
+</p>
+
 > **Not investment advice.** The data and AI output shown by the app are for information and education only and may be wrong, delayed or incomplete. You are responsible for your own trading decisions.
 
 ## Install on your Android phone
 The app is not on Google Play; you install the APK file directly.
 
-1. **Check your phone.** Android 5.0 or newer on a 64-bit or 32-bit ARM processor (almost every phone sold in recent years).
+1. **Check your phone.** Android 7.0 or newer on a 64-bit or 32-bit ARM processor (almost every phone sold in recent years).
 2. **Download the APK.** On your phone, tap **[Download Modus.apk](https://github.com/nuiaa/Modus2/releases/latest/download/Modus.apk)**; it always points to the newest version. You can also open the [latest release](https://github.com/nuiaa/Modus2/releases/latest) and tap the `.apk` file under **Assets**, or build it yourself (see [Android APK](#android-apk) below) and copy it to the phone over USB.
 3. **Allow the install.** When you open the downloaded file, Android asks for permission to install apps from that source (for example Chrome or Files). Tap **Settings**, turn on **Allow from this source**, then go back.
 4. **Install.** Tap **Install**. If Google Play Protect warns that the app is from an unknown developer, choose **More details → Install anyway**; the APK is signed with a development key, not a Play Store key.
 5. **First launch.** Open **Modus Sync**, allow notifications so price alarms can reach you, and wait a few seconds while market data loads. To use the assistant, enter your own AI provider key (see [AI key](#ai-key)).
 
-**Updating:** install the new APK over the old one; your alarms and settings are kept. If Android says the app conflicts with an existing package, the new file was signed on a different computer: uninstall the old version first (this deletes its alarms and settings).
-
-<p>
-  <img src="design/screenshots/en/01_market.png" width="200" alt="Market overview">
-  <img src="design/screenshots/en/02_indicators.png" width="200" alt="Indicator list">
-  <img src="design/screenshots/en/05_options.png" width="200" alt="Options and GEX levels">
-  <img src="design/screenshots/en/10_market_dark.png" width="200" alt="Dark theme">
-</p>
-<p>
-  <img src="design/screenshots/en/03_indicator_detail.png" width="200" alt="Indicator detail">
-  <img src="design/screenshots/en/04_dynamics.png" width="200" alt="Market dynamics">
-  <img src="design/screenshots/en/06_alarm.png" width="200" alt="Alarm editor">
-  <img src="design/screenshots/en/07_appearance_language.png" width="200" alt="Theme and language settings">
-</p>
-<p>
-  <img src="design/screenshots/en/09_assistant.png" width="200" alt="Assistant">
-  <img src="design/screenshots/en/08_assistant_setup.png" width="200" alt="AI provider setup">
-</p>
+**Updating:** install the new APK over the old one; from version 0.2 on, your alarms, API key and settings are kept (updating from 0.1 resets them once). If Android says the app conflicts with an existing package, the new file was signed on a different computer: uninstall the old version first (this deletes its alarms and settings).
 
 ## Features
 - Prices, volatility and macro indicators for gold, silver, oil, the S&P 500, Bitcoin and the dollar index

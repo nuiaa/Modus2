@@ -30,6 +30,7 @@ from alarm_logic import (GEX_CONDITIONS, alarm_key, evaluate_alarm, is_checkable
                          observe, read_alarms, save_changes, write_alarms)
 
 import i18n
+import storage
 from i18n import tr, trd
 
 from kivy.core.window import Window
@@ -845,11 +846,13 @@ def condition_options():
 
 class ChoiceSheet(Sheet):
     """Single-choice list with a checkmark on the current value."""
-    def __init__(self, title, options, selected, on_choice, **kwargs):
+    def __init__(self, title, options, selected, on_choice, fonts=None, **kwargs):
         super(ChoiceSheet, self).__init__(title, height=min(Window.height * 0.8, dp(120 + 49 * len(options))), **kwargs)
         group = GroupedList()
         for value, label in options:
             row = ListRow(label, accessory="check" if value == selected else None)
+            if fonts and fonts.get(value):
+                row.title_label.font_name = fonts[value]
             row.bind(on_press=lambda _r, v=value: (self.dismiss(), on_choice(v)))
             group.add_row(row)
         scroll, stack = scrolling_list()
@@ -1480,7 +1483,9 @@ class AppearanceSheet(Sheet):
             Clock.schedule_once(lambda dt: app.apply_theme(mode), 0.25)
 
     def _pick_language(self, *args):
-        ChoiceSheet(tr("Uygulama dili"), i18n.LANGUAGES, i18n.current, self._set_language).open()
+        # Each language name is drawn in its own script, which the active font may lack.
+        ChoiceSheet(tr("Uygulama dili"), i18n.LANGUAGES, i18n.current, self._set_language,
+                    fonts=ui_text.language_name_fonts()).open()
 
     def _set_language(self, code):
         self.dismiss()
@@ -1789,10 +1794,7 @@ class AIScreen(Screen):
         self.root_layout.add_widget(self.chat_scroll)
         Clock.schedule_once(fit_chat_height, 0)
 
-        self._add_ai_bubble(
-            tr("Merhaba. Bir varlık ya da piyasa hakkında soru sorun; güncel gözlemleri ve geçmiş hareketleri "
-               "birlikte değerlendireyim. Takip sorularında önceki konuyu hatırlarım."),
-            "Modus")
+        self._add_welcome()
 
         input_bar = BoxLayout(orientation='horizontal', size_hint_y=None, height=dp(48), spacing=dp(8))
         self.msg_input = ModernTextInput(hint_text=tr("Mesaj"), multiline=False, radius_val=22,
@@ -1808,14 +1810,23 @@ class AIScreen(Screen):
 
         self.add_widget(self.root_layout)
 
+    def _add_welcome(self):
+        bubble = self._add_ai_bubble(
+            tr("Merhaba. Bir varlık ya da piyasa hakkında soru sorun; güncel gözlemleri ve geçmiş hareketleri "
+               "birlikte değerlendireyim. Takip sorularında önceki konuyu hatırlarım."),
+            "Modus")
+        bubble.entry['welcome'] = True
+
     def restore_history(self, history, transcript=()):
-        """Re-draw a conversation after a theme switch."""
+        """Re-draw a conversation after a theme or language switch."""
         self.chat_history = list(history)
         if transcript:
             self.chat_content.clear_widgets()
             self.transcript = []
             for entry in transcript:
-                if entry['mine']:
+                if entry.get('welcome'):
+                    self._add_welcome()  # in the newly selected language
+                elif entry['mine']:
                     self._add_user_bubble(entry['text'])
                 else:
                     self._add_ai_bubble(entry['text'], entry.get('model'), entry.get('color'), raw=True)
@@ -2196,11 +2207,15 @@ class WallStreetApp(App):
 
     def build(self):
         self.title = "Modus"
-        ui_text.activate(i18n.load_language())
+        # Settings live outside files/app, which Android replaces on every APK update.
+        AppState.config_file = storage.data_path("ai_config.json")
+        AppState.market_cache_file = storage.data_path("market_cache.json")
+        AlarmManager.alarm_file = storage.data_path("alarms.json")
+        ui_text.activate(i18n.load_language(storage.data_path(i18n.PREFS_FILE)))
         AppState.load_all()
         AlarmManager.load_alarms()
         NotificationEngine.init_engine()
-        theme.apply(theme.load_mode())
+        theme.apply(theme.load_mode(storage.data_path(theme.PREFS_FILE)))
         self.container = BoxLayout(orientation='vertical')
         self._build_ui()
         return self.container
@@ -2228,7 +2243,7 @@ class WallStreetApp(App):
 
     def apply_theme(self, mode=None):
         if mode:
-            theme.save_mode(mode)
+            theme.save_mode(mode, storage.data_path(theme.PREFS_FILE))
         previous = theme.name
         theme.apply(mode or theme.mode)
         if mode or theme.name != previous:
@@ -2239,7 +2254,7 @@ class WallStreetApp(App):
         """Switch the interface language and rebuild screens, keeping the conversation."""
         if code == i18n.current:
             return
-        i18n.save_language(code)
+        i18n.save_language(code, storage.data_path(i18n.PREFS_FILE))
         ui_text.activate(code)
         ai_screen = self.sm.get_screen('ai_screen')
         self._build_ui(self.sm.current, (ai_screen.chat_history, ai_screen.transcript))

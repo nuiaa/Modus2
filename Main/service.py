@@ -12,6 +12,7 @@ import re
 import requests
 
 import i18n
+import storage
 from i18n import tr, trd
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
@@ -214,7 +215,9 @@ class ServiceMarketFetcher:
 
 
 def load_alarms():
+    persistent = storage.data_path("alarms.json")
     paths = [
+        persistent,
         "alarms.json",
         os.path.join(os.path.dirname(__file__), "alarms.json"),
         "/data/data/org.godmode.borsaradar/files/app/alarms.json"
@@ -226,7 +229,7 @@ def load_alarms():
                     return json.load(f), p
             except Exception:
                 pass
-    return [], "alarms.json"
+    return [], persistent
 
 def save_alarms(alarms, path, changes=None):
     """Re-read the file so alarms the app added/edited meanwhile are not overwritten."""
@@ -273,7 +276,7 @@ def check_and_trigger_alarms():
 
 
 def main_loop():
-    i18n.set_language(i18n.load_language())
+    i18n.set_language(i18n.load_language(storage.data_path(i18n.PREFS_FILE)))
     print("[ModusService] 2 dakikalik arka plan alarm dongusu basladi.")
     while True:
         try:

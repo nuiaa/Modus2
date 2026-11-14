@@ -430,5 +430,8 @@
 "The provider's safety filter blocked the response.",
 "API catalog; usage depends on access and quota.",
 "The provider could not complete the response.",
-"basis points"
+"basis points",
+"Geopolitical risk",
+"Positioning (CFTC COT)",
+"Latest funding"
 ]

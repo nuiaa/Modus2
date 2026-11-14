@@ -69,6 +69,17 @@ def apply_font(code):
     return None
 
 
+def language_name_fonts():
+    """Font per language code able to draw that language's own name in the picker."""
+    from kivy.core.text import DEFAULT_FONT, LabelBase
+    latin = (_default_font or LabelBase._fonts.get(DEFAULT_FONT) or [None])[0]
+    fonts = {}
+    for code, _name in i18n.LANGUAGES:
+        files = font_files(code)
+        fonts[code] = files[0] if files else latin
+    return {code: path for code, path in fonts.items() if path}
+
+
 def _shape(text):
     try:
         import arabic_reshaper
@@ -123,5 +134,6 @@ def activate(code):
     """Apply fonts and RTL handling for ``code`` before widgets are built."""
     i18n.set_language(code)
     apply_font(code)
-    if i18n.is_rtl(code):
-        install_rtl_support()
+    # Always on: Arabic can appear in any language (the language picker, AI replies);
+    # text without Arabic letters is left untouched.
+    install_rtl_support()
