@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+
+# IDE
+.idea/
+.vscode/
+
+# Build outputs
+APK/
+*.apk
+Main/bin/
+Main/.buildozer/
+
+# Runtime caches and third-party data (not redistributable)
+Main/market_cache.json
+*.sqlite3
+Main/Comex_Verileri/*
+!Main/Comex_Verileri/.gitkeep
+
+# Per-device settings written at runtime (may contain an API key)
+Main/ai_config.json
+Main/alarms.json
+Main/language.json
+Main/ui_prefs.json
+*.tmp
